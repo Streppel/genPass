@@ -1,4 +1,4 @@
-module github.com/streppel/fluentpass
+module github.com/streppel/genpass
 
 go 1.14
 
