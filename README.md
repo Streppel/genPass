@@ -25,21 +25,25 @@ import (
 )
 
 func main() {
-	// if unspecified in the parameters, default password length is 8
+	// default password length is 8
 	// default password is numeric
-	numericPassword := genpass.NewPassword()
+	numericPass := genpass.NewPassword()
+	fmt.Println(numericPass) // example: "34997406"
 
-	fmt.Println(numericPassword) // example: "34997406"
+	// control password len with .WithLength
+	tinyPass := genpass.NewPassword(genpass.WithLength(3))
+	fmt.Println(tinyPass) // example: "531"
 
 	// to generate an alphabetic password, use Alphabetic option
-	alphabeticPassword := genpass.NewPassword(genpass.WithCharacters(genpass.Alphabetic))
-
+	alphabeticPassword := genpass.NewPassword(
+		genpass.WithCharacters(genpass.Alphabetic))
 	fmt.Println(alphabeticPassword) // example: "pduhkuyu"
 
 	// so on with alphanumeric, or with symbols
-	alphanumericPassword := genpass.NewPassword(genpass.WithCharacters(genpass.Alphanumeric))
-	symbolsPassword := genpass.NewPassword(genpass.WithCharacters(genpass.AlphanumericWithSymbols))
-
+	alphanumericPassword := genpass.NewPassword(
+		genpass.WithCharacters(genpass.Alphanumeric))
+	symbolsPassword := genpass.NewPassword(
+		genpass.WithCharacters(genpass.AlphanumericWithSymbols))
 	fmt.Println(alphanumericPassword) // example: "7bvimig3"
 	fmt.Println(symbolsPassword) // example: "~sa&&*_c"
 
@@ -50,7 +54,6 @@ func main() {
 	alphanumericMixedPassword := genpass.NewPassword(
 		genpass.WithCharacters(genpass.Alphanumeric),
 		genpass.WithCase(genpass.Mixedcase))
-
 	fmt.Println(alphaUpperPassword) // example: "I4U1ZHIV"
 	fmt.Println(alphanumericMixedPassword) // example: "6YTNzu2w"
 }
