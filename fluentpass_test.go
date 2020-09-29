@@ -1,4 +1,4 @@
-package fluentpass
+package genpass
 
 import (
 	"testing"

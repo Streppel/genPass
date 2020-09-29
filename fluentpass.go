@@ -1,4 +1,4 @@
-package fluentpass
+package genpass
 
 import (
 	"github.com/streppel/genpass/internal"
