@@ -12,12 +12,12 @@ const (
 	symbols      = "~!@#$%^&*()_-+?"
 )
 
-type CharacterType int
-type TypeCase int
+type characterType int
+type typeCase int
 
 type generator struct {
-	CharacterType CharacterType
-	TypeCase      TypeCase // only used when alpha characters are involved
+	CharacterType characterType
+	TypeCase      typeCase // only used when alpha characters are involved
 
 	Length int
 
