@@ -5,11 +5,9 @@
 
 Simple and straight-forward **random password generation** in Go, offering simple but useful options for how the final password will look like.
 
-This was born out of the need of a... random string password generator, with the bonus of choosing what kind of characters will be in it.
-
 Currently we support the following usecases:
 - Numeric passwords
-- Alphabetic only passwords
+- Alphabetic passwords
 - Alphanumeric passwords
 - Alphanumeric with symbols (~!@#$%^&*()_-+?)
 
