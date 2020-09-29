@@ -3,7 +3,7 @@
   🔢 genPass 🔣
 </h1>
 
-Simple and straight-forward **random password generation**, offering simple but useful options for how the final password will look like.
+Simple and straight-forward **random password generation** in Go, offering simple but useful options for how the final password will look like.
 
 This was born out of the need of a... random string password generator, with the bonus of choosing what kind of characters will be in it.
 
@@ -13,7 +13,13 @@ Currently we support the following usecases:
 - Alphanumeric passwords
 - Alphanumeric with symbols (~!@#$%^&*()_-+?)
 
-Please note that currently we do not support "fancy stuff" like entropy control at the moment, leaving it entirely in control of [crypto/rand](https://godoc.org/crypto/rand).
+Sample of generated passwords (using default length with various charset and case options options):
+```
+93376358    xnzrowlk    34weaqb0
+0oc7lm7?    146EQGAQ    ye7OjZmz
+```
+
+Please note that currently we do not support "fancy stuff" like entropy control at the moment, leaving it entirely in control of Go's [crypto/rand](https://godoc.org/crypto/rand) package.
 
 Examples:
 
@@ -35,27 +41,26 @@ func main() {
 	fmt.Println(tinyPass) // example: "531"
 
 	// to generate an alphabetic password, use Alphabetic option
-	alphabeticPassword := genpass.NewPassword(
-		genpass.WithCharacters(genpass.Alphabetic))
-	fmt.Println(alphabeticPassword) // example: "pduhkuyu"
+	alphabeticPass := genpass.NewPassword(genpass.WithCharacters(genpass.Alphabetic))
+	fmt.Println(alphabeticPass) // example: "pduhkuyu"
 
 	// so on with alphanumeric, or with symbols
-	alphanumericPassword := genpass.NewPassword(
+	alphanumericPass := genpass.NewPassword(
 		genpass.WithCharacters(genpass.Alphanumeric))
-	symbolsPassword := genpass.NewPassword(
+	symbolsPass := genpass.NewPassword(
 		genpass.WithCharacters(genpass.AlphanumericWithSymbols))
-	fmt.Println(alphanumericPassword) // example: "7bvimig3"
-	fmt.Println(symbolsPassword) // example: "~sa&&*_c"
+	fmt.Println(alphanumericPass) // example: "7bvimig3"
+	fmt.Println(symbolsPass) // example: "~sa&&*_c"
 
 	// when using alpha characters, we can also modify the type case (default is lower)
-	alphaUpperPassword := genpass.NewPassword(
+	alphaUpperPass := genpass.NewPassword(
 		genpass.WithCharacters(genpass.Alphanumeric),
 		genpass.WithCase(genpass.Uppercase))
-	alphanumericMixedPassword := genpass.NewPassword(
+	alphanumericMixedPass := genpass.NewPassword(
 		genpass.WithCharacters(genpass.Alphanumeric),
 		genpass.WithCase(genpass.Mixedcase))
-	fmt.Println(alphaUpperPassword) // example: "I4U1ZHIV"
-	fmt.Println(alphanumericMixedPassword) // example: "6YTNzu2w"
+	fmt.Println(alphaUpperPass) // example: "I4U1ZHIV"
+	fmt.Println(alphanumericMixedPass) // example: "6YTNzu2w"
 }
 ```
 
