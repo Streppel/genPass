@@ -1,10 +1,8 @@
-package internal
+package genpass
 
 import (
 	"crypto/rand"
 	"io"
-
-	fluentpass "github.com/streppel/genpass"
 )
 
 const (
@@ -14,20 +12,23 @@ const (
 	symbols      = "~!@#$%^&*()_-+?"
 )
 
-type Generator struct {
-	CharacterType fluentpass.CharacterType
-	TypeCase      fluentpass.TypeCase // only used when alpha characters are involved
+type CharacterType int
+type TypeCase int
+
+type generator struct {
+	CharacterType CharacterType
+	TypeCase      TypeCase // only used when alpha characters are involved
 
 	Length int
 
 	randomnessGenerator io.Reader
 }
 
-func NewGenerator(opts ...fluentpass.Param) *Generator {
-	g := &Generator{
+func newGenerator(opts ...Param) *generator {
+	g := &generator{
 		Length:              8,
-		CharacterType:       fluentpass.Numeric,
-		TypeCase:            fluentpass.Lowercase,
+		CharacterType:       Numeric,
+		TypeCase:            Lowercase,
 		randomnessGenerator: rand.Reader,
 	}
 	for _, f := range opts {
@@ -36,7 +37,7 @@ func NewGenerator(opts ...fluentpass.Param) *Generator {
 	return g
 }
 
-func (p Generator) Generate() string {
+func (p generator) Generate() string {
 	pwdLength := p.Length
 	randValues := make([]byte, pwdLength)
 	_, err := p.randomnessGenerator.Read(randValues)
@@ -52,47 +53,47 @@ func (p Generator) Generate() string {
 	return string(pwd)
 }
 
-func (p Generator) getCharacter(b byte) rune {
+func (p generator) getCharacter(b byte) rune {
 	i := int(b)
 	switch p.CharacterType {
-	case fluentpass.AlphanumericWithSymbols:
+	case AlphanumericWithSymbols:
 		return p.alphanumWithSymbols(i)
-	case fluentpass.Alphabetic:
+	case Alphabetic:
 		return p.alpha(i)
-	case fluentpass.Alphanumeric:
+	case Alphanumeric:
 		return p.alphanum(i)
 	default:
 		return p.digit(i)
 	}
 }
 
-func (p Generator) digit(i int) rune {
+func (p generator) digit(i int) rune {
 	return p.getRuneFrom(digits, i)
 }
 
-func (p Generator) alpha(i int) rune {
+func (p generator) alpha(i int) rune {
 	return p.getRuneFrom(p.casedLetters(), i)
 }
 
-func (p Generator) alphanum(i int) rune {
+func (p generator) alphanum(i int) rune {
 	return p.getRuneFrom(p.casedLetters()+digits, i)
 }
 
-func (p Generator) alphanumWithSymbols(i int) rune {
+func (p generator) alphanumWithSymbols(i int) rune {
 	return p.getRuneFrom(p.casedLetters()+digits+symbols, i)
 }
 
-func (p Generator) casedLetters() string {
+func (p generator) casedLetters() string {
 	switch p.TypeCase {
-	case fluentpass.Uppercase:
+	case Uppercase:
 		return upperLetters
-	case fluentpass.Lowercase:
+	case Lowercase:
 		return lowerLetters
 	default:
 		return upperLetters + lowerLetters
 	}
 }
 
-func (p Generator) getRuneFrom(str string, i int) rune {
+func (p generator) getRuneFrom(str string, i int) rune {
 	return rune(str[i%len(str)])
 }

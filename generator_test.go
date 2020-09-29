@@ -1,11 +1,9 @@
-package internal
+package genpass
 
 import (
 	"strings"
 	"testing"
 	"unicode"
-
-	fluentpass "github.com/streppel/genpass"
 )
 
 type sequentialReader struct {
@@ -20,14 +18,14 @@ func (s sequentialReader) Read(p []byte) (n int, err error) {
 }
 
 func TestPasswordContent(t *testing.T) {
-	g := NewGenerator()
+	g := newGenerator()
 	g.Length = 1 << 5
 
 	g.randomnessGenerator = sequentialReader{}
 
 	t.Run(`with digits only`, func(t *testing.T) {
 		// build
-		g.CharacterType = fluentpass.Numeric
+		g.CharacterType = Numeric
 
 		// execute
 		pwd := g.Generate()
@@ -43,7 +41,7 @@ func TestPasswordContent(t *testing.T) {
 
 	t.Run(`with alphanumerical characters only`, func(t *testing.T) {
 		// build
-		g.CharacterType = fluentpass.Alphanumeric
+		g.CharacterType = Alphanumeric
 
 		// execute
 		pwd := g.Generate()
@@ -59,7 +57,7 @@ func TestPasswordContent(t *testing.T) {
 
 	t.Run(`with alphabetic characters only`, func(t *testing.T) {
 		// build
-		g.CharacterType = fluentpass.Alphabetic
+		g.CharacterType = Alphabetic
 
 		// execute
 		pwd := g.Generate()
@@ -75,7 +73,7 @@ func TestPasswordContent(t *testing.T) {
 
 	t.Run(`with alphanumerical & special characters`, func(t *testing.T) {
 		// build
-		g.CharacterType = fluentpass.AlphanumericWithSymbols
+		g.CharacterType = AlphanumericWithSymbols
 
 		// execute
 		pwd := g.Generate()
@@ -91,8 +89,8 @@ func TestPasswordContent(t *testing.T) {
 
 	t.Run(`with uppercase only`, func(t *testing.T) {
 		// build
-		g.CharacterType = fluentpass.Alphabetic
-		g.TypeCase = fluentpass.Uppercase
+		g.CharacterType = Alphabetic
+		g.TypeCase = Uppercase
 
 		// execute
 		pwd := g.Generate()
@@ -108,8 +106,8 @@ func TestPasswordContent(t *testing.T) {
 
 	t.Run(`with lower only`, func(t *testing.T) {
 		// build
-		g.CharacterType = fluentpass.Alphabetic
-		g.TypeCase = fluentpass.Lowercase
+		g.CharacterType = Alphabetic
+		g.TypeCase = Lowercase
 
 		// execute
 		pwd := g.Generate()
@@ -125,8 +123,8 @@ func TestPasswordContent(t *testing.T) {
 
 	t.Run(`with mixed case`, func(t *testing.T) {
 		// build
-		g.CharacterType = fluentpass.Alphabetic
-		g.TypeCase = fluentpass.Mixedcase
+		g.CharacterType = Alphabetic
+		g.TypeCase = Mixedcase
 
 		// execute
 		pwd := g.Generate()
