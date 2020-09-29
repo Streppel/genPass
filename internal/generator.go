@@ -1,25 +1,10 @@
-package password
+package internal
 
 import (
 	"crypto/rand"
 	"io"
-)
 
-type CharacterType int
-
-const (
-	Numeric CharacterType = iota
-	Alphabetic
-	Alphanumeric
-	AlphanumericWithSymbols
-)
-
-type TypeCase int
-
-const (
-	Lowercase TypeCase = iota
-	Uppercase
-	Mixedcase
+	fluentpass "github.com/streppel/genpass"
 )
 
 const (
@@ -29,23 +14,20 @@ const (
 	symbols      = "~!@#$%^&*()_-+?"
 )
 
-// public builder interface
-type Param func(*Generator)
-
 type Generator struct {
-	CharacterType CharacterType
-	TypeCase      TypeCase // only used when alpha characters are involved
+	CharacterType fluentpass.CharacterType
+	TypeCase      fluentpass.TypeCase // only used when alpha characters are involved
 
 	Length int
 
 	randomnessGenerator io.Reader
 }
 
-func NewGenerator(opts ...Param) *Generator {
+func NewGenerator(opts ...fluentpass.Param) *Generator {
 	g := &Generator{
 		Length:              8,
-		CharacterType:       Numeric,
-		TypeCase:            Lowercase,
+		CharacterType:       fluentpass.Numeric,
+		TypeCase:            fluentpass.Lowercase,
 		randomnessGenerator: rand.Reader,
 	}
 	for _, f := range opts {
@@ -73,11 +55,11 @@ func (p Generator) Generate() string {
 func (p Generator) getCharacter(b byte) rune {
 	i := int(b)
 	switch p.CharacterType {
-	case AlphanumericWithSymbols:
+	case fluentpass.AlphanumericWithSymbols:
 		return p.alphanumWithSymbols(i)
-	case Alphabetic:
+	case fluentpass.Alphabetic:
 		return p.alpha(i)
-	case Alphanumeric:
+	case fluentpass.Alphanumeric:
 		return p.alphanum(i)
 	default:
 		return p.digit(i)
@@ -102,9 +84,9 @@ func (p Generator) alphanumWithSymbols(i int) rune {
 
 func (p Generator) casedLetters() string {
 	switch p.TypeCase {
-	case Uppercase:
+	case fluentpass.Uppercase:
 		return upperLetters
-	case Lowercase:
+	case fluentpass.Lowercase:
 		return lowerLetters
 	default:
 		return upperLetters + lowerLetters

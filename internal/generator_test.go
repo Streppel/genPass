@@ -1,9 +1,11 @@
-package password
+package internal
 
 import (
 	"strings"
 	"testing"
 	"unicode"
+
+	fluentpass "github.com/streppel/genpass"
 )
 
 type sequentialReader struct {
@@ -25,7 +27,7 @@ func TestPasswordContent(t *testing.T) {
 
 	t.Run(`with digits only`, func(t *testing.T) {
 		// build
-		g.CharacterType = Numeric
+		g.CharacterType = fluentpass.Numeric
 
 		// execute
 		pwd := g.Generate()
@@ -41,7 +43,7 @@ func TestPasswordContent(t *testing.T) {
 
 	t.Run(`with alphanumerical characters only`, func(t *testing.T) {
 		// build
-		g.CharacterType = Alphanumeric
+		g.CharacterType = fluentpass.Alphanumeric
 
 		// execute
 		pwd := g.Generate()
@@ -57,7 +59,7 @@ func TestPasswordContent(t *testing.T) {
 
 	t.Run(`with alphabetic characters only`, func(t *testing.T) {
 		// build
-		g.CharacterType = Alphabetic
+		g.CharacterType = fluentpass.Alphabetic
 
 		// execute
 		pwd := g.Generate()
@@ -73,7 +75,7 @@ func TestPasswordContent(t *testing.T) {
 
 	t.Run(`with alphanumerical & special characters`, func(t *testing.T) {
 		// build
-		g.CharacterType = AlphanumericWithSymbols
+		g.CharacterType = fluentpass.AlphanumericWithSymbols
 
 		// execute
 		pwd := g.Generate()
@@ -89,8 +91,8 @@ func TestPasswordContent(t *testing.T) {
 
 	t.Run(`with uppercase only`, func(t *testing.T) {
 		// build
-		g.CharacterType = Alphabetic
-		g.TypeCase = Uppercase
+		g.CharacterType = fluentpass.Alphabetic
+		g.TypeCase = fluentpass.Uppercase
 
 		// execute
 		pwd := g.Generate()
@@ -106,8 +108,8 @@ func TestPasswordContent(t *testing.T) {
 
 	t.Run(`with lower only`, func(t *testing.T) {
 		// build
-		g.CharacterType = Alphabetic
-		g.TypeCase = Lowercase
+		g.CharacterType = fluentpass.Alphabetic
+		g.TypeCase = fluentpass.Lowercase
 
 		// execute
 		pwd := g.Generate()
@@ -123,8 +125,8 @@ func TestPasswordContent(t *testing.T) {
 
 	t.Run(`with mixed case`, func(t *testing.T) {
 		// build
-		g.CharacterType = Alphabetic
-		g.TypeCase = Mixedcase
+		g.CharacterType = fluentpass.Alphabetic
+		g.TypeCase = fluentpass.Mixedcase
 
 		// execute
 		pwd := g.Generate()
