@@ -18,6 +18,12 @@ func WithCharacters(t characterType) Param {
 	}
 }
 
+func WithCase(t typeCase) Param {
+	return func(generator *generator) {
+		generator.TypeCase = t
+	}
+}
+
 func WithLength(i int) Param {
 	return func(generator *generator) {
 		if i < 0 {
