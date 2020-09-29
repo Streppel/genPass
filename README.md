@@ -13,7 +13,7 @@ Currently we support the following usecases:
 - Alphanumeric passwords
 - Alphanumeric with symbols (~!@#$%^&*()_-+?)
 
-Please note that currently we do not support fancy stuff like entropy control at the moment, leaving it entirely in control of [crypto/rand](https://godoc.org/crypto/rand).
+Please note that currently we do not support "fancy stuff" like entropy control at the moment, leaving it entirely in control of [crypto/rand](https://godoc.org/crypto/rand).
 
 Examples:
 
@@ -57,4 +57,13 @@ func main() {
 	fmt.Println(alphaUpperPassword) // example: "I4U1ZHIV"
 	fmt.Println(alphanumericMixedPassword) // example: "6YTNzu2w"
 }
+```
+
+Benchmarking with default password generation:
+```
+goos: linux
+goarch: amd64
+pkg: github.com/streppel/genpass
+BenchmarkNewPassword-8           1819519               653 ns/op
+PASS
 ```
