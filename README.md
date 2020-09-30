@@ -3,7 +3,7 @@
   🔢 genPass 🔣
 </h1>
 
-Simple and straight-forward **random password generation** in Go, offering simple but useful options for how the final password will look like.
+Simple and straight-forward **random password generator** in Go, offering simple but useful options for how the final password will look like.
 
 Currently we support the following usecases:
 - Numeric passwords
